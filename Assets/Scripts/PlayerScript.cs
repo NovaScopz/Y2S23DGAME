@@ -6,11 +6,13 @@ public class PlayerScript : MonoBehaviour
     //player variables
     public float moveSpeed = 5f; //movement
     public float rotationSpeed = 100f; // rotation
-    public float jumpForce = 5f; // jump force
+    public float jumpForce = 15f; // jump force
     public Transform cameraTransform; // camera reference for relative movement
     public bool pickupItem = false; //holding item
     private Rigidbody rb;
     private bool isGrounded = false;
+    public int inventoryItems = 0;
+    public int jumpsRemaining = 2; // double jump variable
     
 
 
@@ -56,9 +58,10 @@ public class PlayerScript : MonoBehaviour
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0); // Stop horizontal movement
         }
         // Jump
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && jumpsRemaining > 0)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpsRemaining--; // Decrease jumps remaining for double jump
         }
 
         //capsule upright by preserving yaw only
@@ -76,13 +79,15 @@ public class PlayerScript : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // pickup starter
-        if (other.CompareTag("item") && !pickupItem)
+        if (other.CompareTag("item") && !pickupItem && Keyboard.current.eKey.wasPressedThisFrame && inventoryItems < 3) //pickup requirements of trigger, button and inventory cap 3
         {
             pickupItem = true;
-            Destroy(other.gameObject); //change for throw and carry mechanics later
+            Destroy(other.gameObject); 
             Debug.Log("Item picked up!");
+            inventoryItems++;
+
         }
-    }
+    }   
 
     void OnCollisionEnter(Collision collision)
     {
@@ -90,7 +95,7 @@ public class PlayerScript : MonoBehaviour
         {
             isGrounded = true;
             Debug.Log("Player is grounded.");
-
+            jumpsRemaining = 2; // reset jumps when grounded
         }
     }
 
@@ -99,6 +104,7 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.CompareTag("ground"))
         {
             isGrounded = false;
+            jumpsRemaining = 1; // disable double jump by changing jumps on leaving ground
             Debug.Log("Player is not grounded.");
         }
     }
