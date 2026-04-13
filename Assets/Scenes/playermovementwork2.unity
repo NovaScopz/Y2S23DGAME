@@ -291,6 +291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dumpster
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 078f5674d37262745b7136dc3d04349b, type: 3}
+      propertyPath: m_TagString
+      value: bin
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

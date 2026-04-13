@@ -98,8 +98,7 @@ public class PlayerScript : MonoBehaviour
         } else if (other.CompareTag("item") && inventoryItems >= 3)
         {
             Debug.Log("Inventory full! Cannot pick up more items.");
-        }
-     else if (other.CompareTag("bin") && inventoryItems > 0) //pickup requirements of trigger, button and already holding item
+        } else if (other.CompareTag("bin") && inventoryItems > 0) //pickup requirements of trigger, button and already holding item
         {
             pickupItem = false;
             itemsLeft = itemsLeft - inventoryItems; // decrease items left by how many were in inventory

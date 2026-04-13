@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ground
   - item
+  - CinemachineTarget
+  - bin
   layers:
   - Default
   - TransparentFX
