@@ -14,9 +14,12 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody rb;
     // private bool isGrounded = false;
     public int inventoryItems = 0;
+    public int itemsLeft = 15; // for win condition
     // public int jumpsRemaining = 2; // double jump variable
 
     [SerializeField] private TextMeshProUGUI inventoryDisplay;
+    [SerializeField] private TextMeshProUGUI itemsLeftDisplay;
+    [SerializeField] private TextMeshProUGUI instructions;
     
 
 
@@ -82,8 +85,9 @@ public class PlayerScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Item in range");
         // pickup starter
-        if (other.CompareTag("item") && Keyboard.current.eKey.wasPressedThisFrame && inventoryItems < 3) //pickup requirements of trigger, button and inventory cap 3
+        if (other.CompareTag("item") && inventoryItems < 3) //pickup requirements of trigger, button and inventory cap 3
         {
             pickupItem = true;
             Destroy(other.gameObject); 
@@ -91,13 +95,28 @@ public class PlayerScript : MonoBehaviour
             inventoryItems++;
             inventoryDisplayItemAdded();
 
+        } else if (other.CompareTag("item") && inventoryItems >= 3)
+        {
+            Debug.Log("Inventory full! Cannot pick up more items.");
+        }
+     else if (other.CompareTag("bin") && inventoryItems > 0) //pickup requirements of trigger, button and already holding item
+        {
+            pickupItem = false;
+            itemsLeft = itemsLeft - inventoryItems; // decrease items left by how many were in inventory
+            inventoryItems = 0;
+            Debug.Log("Item deposited!");
         }
     }   
+
+
 
     public void inventoryDisplayItemAdded()
     {
         inventoryDisplay.text = inventoryItems + "/3";
+        itemsLeftDisplay.text = "Items Left: " + itemsLeft;
+        instructions.enabled = false;
     }
+
 
     // void OnCollisionEnter(Collision collision)
     // {
