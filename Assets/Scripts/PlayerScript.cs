@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class PlayerScript : MonoBehaviour
     // private bool isGrounded = false;
     public int inventoryItems = 0;
     // public int jumpsRemaining = 2; // double jump variable
+
+    [SerializeField] private TextMeshProUGUI inventoryDisplay;
     
 
 
@@ -85,9 +89,15 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject); 
             Debug.Log("Item picked up!");
             inventoryItems++;
+            inventoryDisplayItemAdded();
 
         }
     }   
+
+    public void inventoryDisplayItemAdded()
+    {
+        inventoryDisplay.text = inventoryItems + "/3";
+    }
 
     // void OnCollisionEnter(Collision collision)
     // {
