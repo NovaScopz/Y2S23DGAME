@@ -18,7 +18,7 @@ Shader "Unlit/Fast Outline"
 
         ZWrite Off
         Cull Off
-        ZTest LEqual
+        ZTest Always
         Blend SrcAlpha OneMinusSrcAlpha
 
         HLSLINCLUDE
