@@ -103,7 +103,7 @@ public class PlayerScript : MonoBehaviour
             pickupItem = false;
             itemsLeft = itemsLeft - inventoryItems; // decrease items left by how many were in inventory
             inventoryItems = 0;
-            Debug.Log("Item deposited!");
+            Debug.Log("Items deposited!");
         }
     }   
 
